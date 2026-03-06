@@ -11,8 +11,9 @@ public class ClienteItensCardapio {
 
         URI uri = URI.create("http://localhost:8000/itensCardapio.json");
 
-
-        try(HttpClient httpClient = HttpClient.newHttpClient()) {
+        HttpClient httpClient = null;
+        try { //VOLTAR AO TRY-WITH-RESOURCE
+            httpClient = HttpClient.newHttpClient();
             HttpRequest httpRequest = HttpRequest.newBuilder(uri).build();
             HttpResponse<String> httpResponse = httpClient.send(httpRequest,
                                                             HttpResponse.BodyHandlers.ofString());
@@ -20,6 +21,8 @@ public class ClienteItensCardapio {
             String body = httpResponse.body();
             System.out.println(statusCode);
             System.out.println(body);
+        } catch (RuntimeException e) { //REMOVER AO CONCLUIR
+            throw new RuntimeException(e);
         }
 
 

@@ -4,7 +4,6 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.Scanner;
 
 public class ClienteViaCEP {
 
@@ -14,8 +13,9 @@ public class ClienteViaCEP {
 
         URI uri = URI.create("https://viacep.com.br/ws/01001000/json/");
 
-
-        try(HttpClient httpClient = HttpClient.newHttpClient()) {
+        HttpClient httpClient = null;
+        try {
+            httpClient = HttpClient.newHttpClient();
             HttpRequest httpRequest = HttpRequest.newBuilder(uri).build();
             HttpResponse<String> httpResponse = httpClient.send(httpRequest,
                                                             HttpResponse.BodyHandlers.ofString());
@@ -23,6 +23,8 @@ public class ClienteViaCEP {
             String body = httpResponse.body();
             System.out.println(statusCode);
             System.out.println(body);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
         }
 
 

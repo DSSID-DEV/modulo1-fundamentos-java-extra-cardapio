@@ -16,4 +16,6 @@ public interface Database {
     int totalItensCardapio();
 
     void adicionaItemCardapio(ItemCardapio item);
+
+    boolean existsItemCardapio(Long pathVariable);
 }

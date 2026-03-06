@@ -1,0 +1,6 @@
+database:
+  name: MySQL
+  host: jdbc:mysql://localhost:3306/cardapio
+  credencials:
+    username: root
+    password: senha123

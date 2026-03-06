@@ -23,7 +23,7 @@ public class HistoricoVisualizacao {
         ItemCardapio itemCardapio = optionalItem.get();
         LocalDateTime agora = LocalDateTime.now();
         visualizacoes.put(itemCardapio, agora);
-        System.out.printf("'%s' visualizado em '%s'\n", itemCardapio.nome(), agora);
+        System.out.printf("'%s' visualizado em '%s'\n", itemCardapio.getNome(), agora);
     }
 
     public void listaVisualizacoes() {
@@ -33,7 +33,7 @@ public class HistoricoVisualizacao {
         }
         System.out.println("\nHistórico de visualizações:");
         visualizacoes.forEach((item, hora) ->
-                System.out.printf(" - '%s' (id %d) em '%s'\n", item.nome(), item.id(), hora));
+                System.out.printf(" - '%s' (id %d) em '%s'\n", item.getNome(), item.getId(), hora));
         System.out.println();
     }
 

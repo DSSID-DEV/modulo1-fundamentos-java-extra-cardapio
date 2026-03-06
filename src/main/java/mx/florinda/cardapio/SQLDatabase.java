@@ -63,18 +63,25 @@ public class SQLDatabase implements Database {
         String sql = "INSERT INTO item_cardapio (id, nome, descricao, categoria, preco, preco_promocional) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/cardapio", "root", "senha123");
              PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setLong(1, item.id());
-                ps.setString(2, item.nome());
-                ps.setString(3, item.descricao());
-                ps.setString(4, item.categoria().name());
-                ps.setBigDecimal(5, item.preco());
-                ps.setBigDecimal(6, item.precoPromocional());
+                ps.setLong(1, item.getId());
+                ps.setString(2, item.getNome());
+                ps.setString(3, item.getDescricao());
+                ps.setString(4, item.getCategoria().name());
+                ps.setBigDecimal(5, item.getPreco());
+                ps.setBigDecimal(6, item.getPrecoPromocional());
 
                 ps.execute();
 
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public boolean existsItemCardapio(Long pathVariable) {
+        String sql = "Select count(id) from item_cardapio where id = ?";
+
+        return false;
     }
 
     @Override

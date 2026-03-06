@@ -1,5 +1,6 @@
 package mx.florinda.cardapio;
 
+import com.dssid.dev.persistence.RepositoryFactory;
 import com.google.gson.Gson;
 
 import java.io.InputStream;
@@ -15,7 +16,8 @@ import java.util.concurrent.Executors;
 
 public class ServidorItensCardapioComSocket {
 
-    private static final Database database = new SQLDatabase();
+//    private static final repository repository = new SQLrepository();
+    private static final ItemCardapioRepository repository = RepositoryFactory.createRepository(ItemCardapioRepository.class);
 
     public static void main(String[] args) throws Exception {
 
@@ -33,7 +35,7 @@ public class ServidorItensCardapioComSocket {
     }
 
     private static void trataRequisicao(Socket clientSocket) {
-
+        String regexPathMapping = "^/([^/]+)(?:/\\d+)?/?$";
         try (clientSocket) {
             InputStream clientIS = clientSocket.getInputStream();
 
@@ -54,9 +56,10 @@ public class ServidorItensCardapioComSocket {
             String requestLine = requestLineAndHeadersChunks[0];
             String[] requestLineChunks = requestLine.split(" ");
             String method = requestLineChunks[0];
-            String requestURI = requestLineChunks[1];
+            String requestURI = requestLineChunks[1].replaceAll(regexPathMapping, "/$1");
             String httpVersion = requestLineChunks[2];
-
+            String variable = requestLineChunks[1].substring(requestURI.length()+1).split("/")[0];
+            Long pathVariable = variable.trim().isBlank() ? null : Long.parseLong(variable);
             System.out.println("Method: " + method);
             System.out.println("Request URI: " + requestURI);
             System.out.println("HTTP Version: " + httpVersion);
@@ -79,7 +82,7 @@ public class ServidorItensCardapioComSocket {
 
             } else if ("GET".equals(method) && "/itens-cardapio".equals(requestURI)) {
                 System.out.println("Chamou listagem de itens de cardápio");
-                List<ItemCardapio> listaItensCardapio = database.listaItensCardapio();
+                List<ItemCardapio> listaItensCardapio = repository.findAll();
 
                 Gson gson = new Gson();
                 String json = gson.toJson(listaItensCardapio);
@@ -90,7 +93,7 @@ public class ServidorItensCardapioComSocket {
                 clientOut.println(json);
             } else if ("GET".equals(method) && "/itens-cardapio/total".equals(requestURI)) {
                 System.out.println("Chamou total de itens de cardápio");
-                int totalItens = database.totalItensCardapio();
+                int totalItens = repository.totalItensCardapio();
 
                 clientOut.println("HTTP/1.1 200 OK");
                 clientOut.println();
@@ -106,7 +109,20 @@ public class ServidorItensCardapioComSocket {
                 Gson gson = new Gson();
                 ItemCardapio item = gson.fromJson(body, ItemCardapio.class);
 
-                database.adicionaItemCardapio(item);
+                repository.insert(item);
+
+                clientOut.println("HTTP/1.1 200 OK");
+            }else if ("DELETE".equals(method) && "/itens-cardapio".equals(requestURI)) {
+                System.out.println("Chamou deleção de itens de cardápio");
+
+                if (pathVariable == null) {
+                    clientOut.println("HTTP/1.1 400 Bad Request");
+                }
+//                if(!repository.existsItemCardapio(pathVariable)) {
+//                    clientOut.println("HTTP/1.1 404 Not Found");
+//                }
+
+                repository.delete(pathVariable);
 
                 clientOut.println("HTTP/1.1 200 OK");
             }
