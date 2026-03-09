@@ -1,0 +1,146 @@
+{
+  "info": {
+    "_postman_id": "a696f49a-2438-4d93-b458-52ccc08e8d0c",
+    "name": "modulo1-fundamentos-extra-cardapio-java",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "28861584",
+    "_collection_link": "https://go.postman.co/collection/28861584-a696f49a-2438-4d93-b458-52ccc08e8d0c?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "findAll",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/itens-cardapio",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "itens-cardapio"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "count",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/itens-cardapio/total",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "itens-cardapio",
+            "total"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "create",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"nome\": \"Bobo de camarão\",\r\n    \"descricao\": \"Bobo de camarão é uma especiaria brasileira\",\r\n    \"categoria\": \"PRATOS_PRINCIPAIS\",\r\n    \"preco\": 75.00\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8000/itens-cardapio",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "itens-cardapio"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"nome\": \"Bobo de camarão\",\r\n    \"descricao\": \"Bobo de camarão é uma especiaria brasileira\",\r\n    \"categoria\": \"PRATOS_PRINCIPAIS\",\r\n    \"preco\": 75.00\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8000/itens-cardapio",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "itens-cardapio"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "findById",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/itens-cardapio/15",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "itens-cardapio",
+            "15"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "deleteById",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/itens-cardapio/15",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "itens-cardapio",
+            "15"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
